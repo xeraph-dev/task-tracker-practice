@@ -274,7 +274,13 @@ func updateCommand(state *CommandState) (err error) {
 	}
 
 	task.Description = state.Args[1]
-	return state.TaskStore.Update(task)
+
+	if err = state.TaskStore.Update(task); err != nil {
+		return
+	}
+
+	fmt.Println("Task updated successfully")
+	return
 }
 
 func deleteCommand(state *CommandState) (err error) {
@@ -293,7 +299,12 @@ func deleteCommand(state *CommandState) (err error) {
 		return
 	}
 
-	return state.TaskStore.Delete(task)
+	if err = state.TaskStore.Delete(task); err != nil {
+		return
+	}
+
+	fmt.Println("Task deleted successfully")
+	return
 }
 
 func markCommand(state *CommandState) (err error) {
@@ -319,7 +330,13 @@ func markCommand(state *CommandState) (err error) {
 	}
 
 	task.Status = status
-	return state.TaskStore.Update(task)
+
+	if err = state.TaskStore.Update(task); err != nil {
+		return
+	}
+
+	fmt.Println("Task status updated to", task.Status.String())
+	return
 }
 
 func listCommand(state *CommandState) (err error) {
